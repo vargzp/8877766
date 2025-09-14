@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>期货保证金计算器</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px; /* 恢复body外边距 */
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 600px; /* 恢复主内容区域最大宽度 */
+            margin: 30px auto; /* 恢复主内容区域居中 */
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        /* 提示信息样式 */
+        .tip-message {
+            background-color: #fff3cd; /* Light yellow */
+            border: 1px solid #ffeeba;
+            color: #856404; /* Dark yellow text */
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 0.95em;
+        }
+        .tip-message p {
+            margin: 0; /* Remove default paragraph margin */
+        }
+
+        /* 交易所参数查询标题样式 */
+        .exchange-section-title {
+            color: #2c3e50;
+            text-align: center;
+            margin-top: 25px; /* 增加与上方提示的间距 */
+            margin-bottom: 15px; /* 增加与下方按钮的间距 */
+            font-size: 1.2em; /* 稍微缩小标题字体 */
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: calc(100% - 22px); /* Adjust for padding and border */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+        }
+        input[type="number"] {
+            -moz-appearance: textfield; /* Firefox */
+        }
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+            width: 100%;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #2e7d32;
+        }
+        .error-message {
+            color: #d32f2f;
+            background-color: #ffebee;
+            border: 1px solid #ef9a9a;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            display: none; /* Hidden by default */
+        }
+
+        /* 交易所链接按钮容器样式 - 调整为紧凑型 */
+        .exchange-links {
+            display: flex;
+            flex-wrap: wrap; /* 允许按钮换行 */
+            justify-content: center; /* 居中对齐 */
+            gap: 8px; /* 按钮之间的间距更小 */
+            margin-bottom: 20px; /* 增加与下方分隔线的间距 */
+        }
+        /* 交易所按钮样式 - 调整为更小 */
+        .exchange-button {
+            background-color: #007bff; /* 蓝色 */
+            color: white;
+            padding: 8px 12px; /* 按钮内边距更小 */
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em; /* 字体更小 */
+            text-decoration: none; /* 移除链接下划线 */
+            transition: background-color 0.3s ease;
+            flex-grow: 0; /* 不允许按钮增长 */
+            max-width: 120px; /* 限制单个按钮的最大宽度，使其更紧凑 */
+            text-align: center;
+        }
+        .exchange-button:hover {
+            background-color: #0056b3; /* 鼠标悬停时颜色变深 */
+        }
+
+        /* 分隔线样式 */
+        hr {
+            margin: 25px 0; /* 增加上下间距 */
+            border-top: 1px solid #eee;
+            border-bottom: none; /* 确保只有一条线 */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>期货保证金计算器</h1>
+
+        <!-- 提示信息 -->
+        <div class="tip-message">
+            <p><strong>提示:</strong> 保证金率仅供参考，实际请以交易所数据为准。</p>
+        </div>
+
+        <!-- 交易所参数查询标题 -->
+        <h2 class="exchange-section-title">交易所参数查询</h2>
+        <!-- 交易所参数查询链接的容器 -->
+        <div class="exchange-links" id="exchangeLinksContainer">
+            <!-- 链接将由JavaScript动态加载并插入此处 -->
+        </div>
+
+        <!-- 分隔线 -->
+        <hr>
+
+        <div class="form-group">
+            <label for="exchangeSelect">选择交易所:</label>
+            <select id="exchangeSelect">
+                <option value="">请选择一个交易所</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="productSelect">选择品种代码:</label>
+            <select id="productSelect">
+                <option value="">请选择一个品种</option>
+            </select>
+        </div>
+
+        <hr>
+
+        <h2>当前品种信息与计算参数</h2>
+
+        <div class="form-group">
+            <label for="productCodeInput">品种代码:</label>
+            <input type="text" id="productCodeInput" placeholder="例如: IF" value="">
+        </div>
+
+        <div class="form-group">
+            <label for="unitSizeInput">每手单位:</label>
+            <input type="number" id="unitSizeInput" placeholder="例如: 300 (元/点)" value="">
+        </div>
+
+        <div class="form-group">
+            <label for="marginRatioInput">保证金比例 (%):</label>
+            <input type="number" id="marginRatioInput" placeholder="例如: 10 (表示10%)" value="">
+        </div>
+
+        <div class="form-group">
+            <label for="currentPriceInput">当前价格:</label>
+            <input type="number" id="currentPriceInput" placeholder="例如: 4000" value="">
+        </div>
+
+        <button id="calculateButton">计算保证金</button>
+
+        <div class="error-message" id="errorMessage"></div>
+
+        <div class="result">
+            <p>预估保证金: <span id="marginResult">0.00</span> 元</p>
+        </div>
+    </div>
+
+    <script>
+        // 用于存储从CSV读取的所有期货数据
+        let allFuturesData = [];
+
+        // 获取HTML元素
+        const exchangeSelect = document.getElementById('exchangeSelect');
+        const productSelect = document.getElementById('productSelect');
+        const productCodeInput = document.getElementById('productCodeInput');
+        const unitSizeInput = document.getElementById('unitSizeInput');
+        const marginRatioInput = document.getElementById('marginRatioInput');
+        const currentPriceInput = document.getElementById('currentPriceInput');
+        const calculateButton = document.getElementById('calculateButton');
+        const marginResultSpan = document.getElementById('marginResult');
+        const errorMessageDiv = document.getElementById('errorMessage');
+        const exchangeLinksContainer = document.getElementById('exchangeLinksContainer'); // 获取链接容器
+
+        // 异步加载期货数据CSV文件
+        async function loadFuturesData() {
+            try {
+                const response = await fetch('futures_data.csv');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const csvText = await response.text();
+                parseFuturesCSV(csvText);
+            } catch (error) {
+                console.error('加载期货数据文件失败:', error);
+                showError('无法加载期货数据文件 (futures_data.csv)。请确保文件存在且格式正确。');
+            }
+        }
+
+        // 解析期货数据CSV文本
+        function parseFuturesCSV(csvText) {
+            const lines = csvText.split('\n').filter(line => line.trim() !== '');
+            if (lines.length === 0) {
+                showError('期货数据CSV文件为空或格式不正确。');
+                return;
+            }
+
+            const dataLines = lines.slice(1); 
+            
+            allFuturesData = dataLines.map(line => {
+                const parts = line.split(',');
+                if (parts.length >= 5) {
+                    return {
+                        exchange: parts[0].trim(),
+                        code: parts[1].trim(),
+                        name: parts[2].trim(),
+                        unit: parseFloat(parts[3]),
+                        ratio: parseFloat(parts[4])
+                    };
+                }
+                return null;
+            }).filter(item => item !== null && !isNaN(item.unit) && !isNaN(item.ratio));
+
+            if (allFuturesData.length === 0) {
+                showError('期货数据CSV文件中没有有效的期货数据。请检查格式。');
+                return;
+            }
+
+            populateExchangeSelect();
+            populateProductSelect(allFuturesData);
+        }
+
+        // 异步加载交易所链接CSV文件
+        async function loadExchangeLinks() {
+            try {
+                const response = await fetch('exchange_links.csv');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const csvText = await response.text();
+                const links = parseExchangeLinksCSV(csvText);
+                renderExchangeLinks(links);
+            } catch (error) {
+                console.error('加载交易所链接文件失败:', error);
+                // 链接加载失败不影响主功能，可以不显示错误信息给用户，只在控制台输出
+            }
+        }
+
+        // 解析交易所链接CSV文本
+        function parseExchangeLinksCSV(csvText) {
+            const lines = csvText.split('\n').filter(line => line.trim() !== '');
+            if (lines.length === 0) return [];
+
+            const dataLines = lines.slice(1); // 跳过标题行
+            return dataLines.map(line => {
+                const parts = line.split(',');
+                if (parts.length >= 2) {
+                    return {
+                        name: parts[0].trim(),
+                        url: parts[1].trim()
+                    };
+                }
+                return null;
+            }).filter(item => item !== null);
+        }
+
+        // 渲染交易所链接按钮
+        function renderExchangeLinks(links) {
+            exchangeLinksContainer.innerHTML = ''; // 清空现有内容
+            links.forEach(link => {
+                const anchor = document.createElement('a');
+                anchor.href = link.url;
+                anchor.textContent = link.name;
+                anchor.target = '_blank'; // 在新标签页打开
+                anchor.classList.add('exchange-button'); // 应用CSS样式
+                exchangeLinksContainer.appendChild(anchor);
+            });
+        }
+
+        // 填充交易所下拉框
+        function populateExchangeSelect() {
+            const exchanges = new Set();
+            allFuturesData.forEach(item => exchanges.add(item.exchange));
+
+            exchangeSelect.innerHTML = '<option value="">请选择一个交易所</option>';
+            exchanges.forEach(exchange => {
+                const option = document.createElement('option');
+                option.value = exchange;
+                option.textContent = exchange;
+                exchangeSelect.appendChild(option);
+            });
+        }
+
+        // 填充品种选择下拉框
+        function populateProductSelect(dataToUse) {
+            productSelect.innerHTML = '<option value="">请选择一个品种</option>';
+            dataToUse.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.code;
+                option.textContent = `${item.code} - ${item.name}`;
+                productSelect.appendChild(option);
+            });
+        }
+
+        // 清空下方输入框和结果
+        function clearInputFields() {
+            productCodeInput.value = '';
+            unitSizeInput.value = '';
+            marginRatioInput.value = '';
+            currentPriceInput.value = '';
+            marginResultSpan.textContent = '0.00';
+            hideError();
+        }
+
+        // 处理交易所选择事件
+        exchangeSelect.addEventListener('change', () => {
+            const selectedExchange = exchangeSelect.value;
+            let filteredProducts = [];
+
+            if (selectedExchange === "") {
+                filteredProducts = allFuturesData;
+            } else {
+                filteredProducts = allFuturesData.filter(item => item.exchange === selectedExchange);
+            }
+            populateProductSelect(filteredProducts);
+
+            productSelect.value = ""; 
+            clearInputFields();
+        });
+
+        // 处理品种选择事件
+        productSelect.addEventListener('change', () => {
+            const selectedCode = productSelect.value;
+            const selectedProduct = allFuturesData.find(item => item.code === selectedCode);
+
+            if (selectedProduct) {
+                productCodeInput.value = selectedProduct.code;
+                unitSizeInput.value = selectedProduct.unit;
+                marginRatioInput.value = selectedProduct.ratio;
+                hideError();
+            } else {
+                clearInputFields();
+            }
+        });
+
+        // 计算保证金
+        calculateButton.addEventListener('click', () => {
+            hideError();
+
+            const code = productCodeInput.value.trim();
+            const unitSize = parseFloat(unitSizeInput.value);
+            const marginRatio = parseFloat(marginRatioInput.value);
+            const currentPrice = parseFloat(currentPriceInput.value);
+
+            if (!code) {
+                showError('品种代码不能为空。');
+                return;
+            }
+            if (isNaN(unitSize) || unitSize <= 0) {
+                showError('每手单位必须是有效的正数。');
+                return;
+            }
+            if (isNaN(marginRatio) || marginRatio <= 0 || marginRatio > 100) {
+                showError('保证金比例必须是0到100之间的有效数字。');
+                return;
+            }
+            if (isNaN(currentPrice) || currentPrice <= 0) {
+                showError('当前价格必须是有效的正数。');
+                return;
+            }
+
+            const margin = currentPrice * unitSize * (marginRatio / 100);
+            marginResultSpan.textContent = margin.toFixed(2);
+        });
+
+        // 显示错误信息
+        function showError(message) {
+            errorMessageDiv.textContent = message;
+            errorMessageDiv.style.display = 'block';
+        }
+
+        // 隐藏错误信息
+        function hideError() {
+            errorMessageDiv.textContent = '';
+            errorMessageDiv.style.display = 'none';
+        }
+
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', () => {
+            loadFuturesData(); // 加载期货数据
+            loadExchangeLinks(); // 加载交易所链接
+        });
+    </script>
+</body>
+</html>

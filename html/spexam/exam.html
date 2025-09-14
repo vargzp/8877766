@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模拟考试系统</title>
+    <!-- 引入 Google Fonts - Roboto 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* 全局样式 */
+        body {
+            font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* 使用Roboto字体，并提供备用字体 */
+            margin: 0; /* 移除默认外边距 */
+            padding: 40px 20px; /* 增加页面内边距 */
+            background-color: #eef2f5; /* 更柔和的背景色 */
+            color: #343a40; /* 深灰色文本，对比度更好 */
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 850px; /* 稍微增加最大宽度 */
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 40px; /* 增加内边距 */
+            border-radius: 12px; /* 更大的圆角 */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* 更明显的阴影效果 */
+        }
+
+        /* 主标题样式 */
+        h1 {
+            text-align: center;
+            color: #0056b3; /* 保持蓝色，但可以根据整体色调调整 */
+            margin-bottom: 40px; /* 增加底部间距 */
+            font-size: 2.5em; /* 增大字体 */
+            font-weight: 700; /* 加粗 */
+            letter-spacing: 1px; /* 增加字母间距 */
+            text-transform: uppercase; /* 大写 */
+            border-bottom: 3px solid #007bff; /* 底部加粗线条 */
+            padding-bottom: 15px;
+        }
+
+        /* 题型标题样式 */
+        .question-type-header {
+            margin-top: 40px; /* 增加顶部间距 */
+            margin-bottom: 25px; /* 增加底部间距 */
+            color: #007bff; /* 使用主蓝色 */
+            border-bottom: 2px solid #a7d9ff; /* 柔和的底部线条 */
+            padding-bottom: 10px;
+            font-size: 1.8em; /* 增大字体 */
+            font-weight: 600; /* 加粗 */
+        }
+
+        /* 题目块样式 */
+        .question-block {
+            margin-bottom: 30px; /* 增加底部间距 */
+            padding: 20px; /* 增加内边距 */
+            border: 1px solid #e0e6ed; /* 柔和的边框颜色 */
+            border-radius: 8px; /* 圆角 */
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* 增加微妙的阴影 */
+            transition: transform 0.2s ease-in-out; /* 添加悬停动画 */
+        }
+        .question-block:hover {
+            transform: translateY(-3px); /* 悬停时稍微上浮 */
+        }
+
+        .question-block h3 {
+            margin-top: 0;
+            color: #343a40;
+            font-size: 1.2em; /* 增大字体 */
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        /* 选项样式 */
+        .options label {
+            display: flex; /* 使用flex布局对齐输入框和文本 */
+            align-items: center; /* 垂直居中 */
+            margin-bottom: 12px; /* 增加底部间距 */
+            cursor: pointer;
+            padding: 10px 15px; /* 增加内边距 */
+            border-radius: 6px;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+            border: 1px solid transparent; /* 默认透明边框 */
+        }
+        .options label:hover {
+            background-color: #e9f5ff; /* 悬停背景色 */
+            border-color: #a7d9ff; /* 悬停边框色 */
+        }
+
+        .options input[type="radio"],
+        .options input[type="checkbox"] {
+            margin-right: 12px; /* 增加右侧间距 */
+            transform: scale(1.2); /* 稍微增大输入框 */
+            accent-color: #007bff; /* 现代浏览器中改变选中颜色 */
+        }
+
+        /* 按钮组样式 */
+        .button-group {
+            display: flex;
+            gap: 20px; /* 按钮之间的间距 */
+            margin-top: 40px;
+        }
+
+        /* 提交按钮样式 */
+        .submit-btn, .reset-btn {
+            flex: 1; /* 让按钮平分宽度 */
+            padding: 18px 25px; /* 增大内边距 */
+            color: white;
+            border: none;
+            border-radius: 8px; /* 圆角 */
+            font-size: 1.2em; /* 增大字体 */
+            font-weight: bold; /* 加粗 */
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* 按钮阴影 */
+        }
+        .submit-btn {
+            background-color: #007bff;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+        }
+        .submit-btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+        .submit-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        /* 重新考试按钮样式 */
+        .reset-btn {
+            background-color: #6c757d; /* 灰色 */
+            box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+            display: none; /* 初始隐藏 */
+        }
+        .reset-btn:hover {
+            background-color: #5a6268;
+            transform: translateY(-2px);
+        }
+
+
+        /* 结果容器样式 */
+        .results-container {
+            margin-top: 40px; /* 增加顶部间距 */
+            padding: 30px; /* 增加内边距 */
+            border-top: 2px solid #a7d9ff; /* 柔和的顶部边框 */
+            background-color: #f0f8ff; /* 柔和的背景色 */
+            border-radius: 12px; /* 圆角 */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* 阴影 */
+            display: none; /* 初始隐藏 */
+        }
+        .results-container h2 {
+            color: #0056b3;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 2em;
+            font-weight: 700;
+        }
+        .score {
+            font-size: 1.8em; /* 增大字体 */
+            font-weight: bold;
+            text-align: center;
+            color: #28a745; /* 绿色 */
+            margin-bottom: 25px;
+            padding: 10px;
+            background-color: #e6ffe6; /* 柔和的绿色背景 */
+            border-radius: 8px;
+        }
+
+        /* 答案反馈样式 */
+        .answer-feedback {
+            margin-top: 15px; /* 增加顶部间距 */
+            padding: 12px 18px; /* 增加内边距 */
+            border-radius: 6px;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+        .answer-feedback strong {
+            margin-right: 8px;
+            font-weight: 500; /* 稍微减弱加粗 */
+        }
+        .answer-feedback.correct {
+            background-color: #d4edda; /* 柔和的绿色背景 */
+            color: #155724; /* 深绿色文本 */
+            border: 1px solid #c3e6cb;
+        }
+        .answer-feedback.incorrect {
+            background-color: #f8d7da; /* 柔和的红色背景 */
+            color: #721c24; /* 深红色文本 */
+            border: 1px solid #f5c6cb;
+        }
+
+        /* 禁用输入样式 */
+        .disabled-input {
+            pointer-events: none;
+            opacity: 0.6; /* 稍微降低透明度 */
+        }
+
+        /* KaTeX 相关的额外样式 */
+        .katex-display {
+            margin-top: 1em;
+            margin-bottom: 1em;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>模拟考试</h1>
+        <div id="exam-container">
+            <!-- 题目将在这里动态加载 -->
+            <p>正在加载题目...</p>
+        </div>
+        <div class="button-group">
+            <button id="submit-exam" class="submit-btn" style="display: none;">提交考试</button>
+            <button id="reset-exam" class="reset-btn">重新考试</button>
+        </div>
+
+        <div id="results-container" class="results-container">
+            <h2>考试结果</h2>
+            <p class="score">您的得分：<span id="final-score">0</span> 分</p>
+            <!-- 每题的答案反馈将直接显示在题目下方 -->
+        </div>
+    </div>
+
+    <script>
+        const EXAM_CSV_FILE = 'questions.csv';
+        const examContainer = document.getElementById('exam-container');
+        const submitButton = document.getElementById('submit-exam');
+        const resetButton = document.getElementById('reset-exam');
+        const resultsContainer = document.getElementById('results-container');
+        const finalScoreSpan = document.getElementById('final-score');
+
+        let allQuestions = []; // 存储所有从CSV读取的题目
+        let selectedQuestions = []; // 存储本次考试随机选择的题目
+        let isKaTeXLoaded = false; // 标记KaTeX是否加载成功
+        let examSettings = {}; // 新增：存储从CSV第一行解析出的考试设置 (inorder, choiceInOrder等)
+
+        // --- KaTeX 加载和渲染逻辑开始 ---
+        // KaTeX CDN 基础路径，使用特定版本以确保稳定性
+        const KTX_CDN_BASE = 'https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/';
+        // KaTeX 本地文件基础路径，假设katex目录在exam.html同级
+        const KTX_LOCAL_BASE = './katex/';
+
+        // 动态加载CSS文件
+        function loadCSS(href) {
+            return new Promise((resolve, reject) => {
+                const link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = href;
+                link.onload = () => resolve(link);
+                link.onerror = () => reject(new Error(`Failed to load CSS: ${href}`));
+                document.head.appendChild(link);
+            });
+        }
+
+        // 动态加载JS文件，返回Promise确保顺序加载和执行
+        async function loadScript(src) {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = src;
+                script.async = false; // 确保脚本按顺序执行
+                script.onload = () => resolve(script);
+                script.onerror = () => reject(new Error(`Failed to load script: ${src}`));
+                document.head.appendChild(script);
+            });
+        }
+
+        // 异步加载KaTeX库（按需加载）
+        async function loadKaTeX() {
+            // 避免重复加载KaTeX
+            if (isKaTeXLoaded) {
+                console.log('KaTeX: 已加载，跳过重复加载。');
+                return;
+            }
+
+            const filesToLoad = [
+                { type: 'css', local: KTX_LOCAL_BASE + 'katex.min.css', cdn: KTX_CDN_BASE + 'katex.min.css' },
+                { type: 'js', local: KTX_LOCAL_BASE + 'katex.min.js', cdn: KTX_CDN_BASE + 'katex.min.js' },
+                // auto-render.min.js 通常在 KaTeX dist 目录下的 contrib 子目录中
+                { type: 'js', local: KTX_LOCAL_BASE + 'contrib/auto-render.min.js', cdn: KTX_CDN_BASE + 'contrib/auto-render.min.js' }
+            ];
+
+            let loadedSuccessfully = false;
+
+            // 尝试从本地加载
+            try {
+                console.log('KaTeX: 尝试从本地文件加载...');
+                for (const file of filesToLoad) {
+                    if (file.type === 'css') {
+                        await loadCSS(file.local);
+                    } else {
+                        await loadScript(file.local);
+                    }
+                    console.log(`KaTeX: 本地文件 ${file.local} 加载成功。`);
+                }
+                loadedSuccessfully = true;
+                console.log('KaTeX: 所有本地文件加载成功。');
+            } catch (e) {
+                console.warn(`KaTeX: 本地文件加载失败 (${e.message})，将尝试从CDN加载。`);
+                // 清理已加载的本地文件（可选，但可以避免冲突）
+                document.querySelectorAll(`link[href^="${KTX_LOCAL_BASE}"], script[src^="${KTX_LOCAL_BASE}"]`).forEach(el => el.remove());
+            }
+
+            // 如果本地加载失败，则从CDN加载
+            if (!loadedSuccessfully) {
+                try {
+                    console.log('KaTeX: 尝试从CDN加载...');
+                    for (const file of filesToLoad) {
+                        if (file.type === 'css') {
+                            await loadCSS(file.cdn);
+                        } else {
+                            await loadScript(file.cdn);
+                        }
+                        console.log(`KaTeX: CDN文件 ${file.cdn} 加载成功。`);
+                    }
+                    loadedSuccessfully = true;
+                    console.log('KaTeX: 所有CDN文件加载成功。');
+                } catch (e) {
+                    console.error(`KaTeX: CDN文件加载失败 (${e.message})。公式将无法渲染。`);
+                }
+            }
+
+            isKaTeXLoaded = loadedSuccessfully;
+            if (isKaTeXLoaded && typeof renderMathInElement === 'undefined') {
+                console.error('KaTeX: auto-render.min.js 可能未正确加载或执行，renderMathInElement 函数不可用。');
+                isKaTeXLoaded = false; // 即使文件加载了，如果函数不存在也视为失败
+            }
+        }
+
+        // 渲染数学公式
+        function renderMath() {
+            // 确保KaTeX和auto-render都已加载且renderMathInElement函数可用
+            if (isKaTeXLoaded && typeof renderMathInElement === 'function') {
+                renderMathInElement(examContainer, {
+                    // 配置KaTeX的定界符
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true}, // 块级公式，例如 $$a^2 + b^2 = c^2$$
+                        {left: '$', right: '$', display: false},  // 行内公式，例如 $E=mc^2$
+                    ],
+                    throwOnError: false // 不在渲染失败时抛出错误，而是显示原始文本
+                });
+                console.log('KaTeX: 数学公式渲染完成。');
+            } else {
+                console.warn('KaTeX: 未加载或渲染函数不可用，数学公式将不会被渲染。');
+            }
+        }
+        // --- KaTeX 加载和渲染逻辑结束 ---
+
+
+        // 辅助函数：打乱数组
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // 解析CSV数据
+        async function parseCSVData(csvText) {
+            const lines = csvText.trim().split('\n');
+            if (lines.length === 0) {
+                console.error("CSV文件为空。");
+                return { questionCounts: {}, questions: [] };
+            }
+
+            // 第一行：题目数量配置 (使用标签)
+            const countLine = lines.shift();
+            const countParts = countLine.split(',').map(part => part.trim());
+            const questionCounts = {
+                single_choice: 0,
+                multiple_choice: 0,
+                true_false: 0,
+                inorder: 0, // 默认值为0，表示随机排列题目
+                choiceInOrder: 0 // 新增：默认值为0，表示随机排列选项
+            };
+
+            countParts.forEach(part => {
+                const [tag, countStr] = part.split(':').map(s => s.trim());
+                const count = parseInt(countStr, 10);
+
+                if (!isNaN(count)) {
+                    switch (tag) {
+                        case 'SINGLE_CHOICE_COUNT':
+                            questionCounts.single_choice = count;
+                            break;
+                        case 'MULTIPLE_CHOICE_COUNT':
+                            questionCounts.multiple_choice = count;
+                            break;
+                        case 'TRUE_FALSE_COUNT':
+                            questionCounts.true_false = count;
+                            break;
+                        case 'INORDER':
+                            questionCounts.inorder = count;
+                            break;
+                        case 'CHOICE_IN_ORDER': // 新增参数解析
+                            questionCounts.choiceInOrder = count;
+                            break;
+                        default:
+                            console.warn(`未知题目数量标签: ${tag}`);
+                    }
+                }
+            });
+
+            const questions = [];
+            for (const line of lines) {
+                const parts = line.split(',');
+                // 最小长度检查：题目,类型,选项1,__ANSWERS__,答案1,__SCORE__,分值 (至少7个部分)
+                if (parts.length < 7) {
+                    console.warn("跳过格式不正确的行 (至少需要7个部分):", line);
+                    continue;
+                }
+
+                const questionText = parts[0].trim();
+                const type = parts[1].trim();
+
+                // 查找 __ANSWERS__ 和 __SCORE__ 标签的索引
+                const answersTagIndex = parts.indexOf('__ANSWERS__');
+                const scoreTagIndex = parts.indexOf('__SCORE__');
+
+                // 检查标签是否存在且顺序正确
+                if (answersTagIndex === -1 || scoreTagIndex === -1 || answersTagIndex >= scoreTagIndex) {
+                    console.warn("跳过格式不正确的行 (未找到 __ANSWERS__ 或 __SCORE__ 标签，或顺序错误):", line);
+                    continue;
+                }
+
+                // 选项在题目类型 (索引1) 之后，__ANSWERS__ 标签之前
+                const options = parts.slice(2, answersTagIndex).map(o => o.trim());
+
+                // 答案在 __ANSWERS__ 标签之后，__SCORE__ 标签之前
+                const answer = parts.slice(answersTagIndex + 1, scoreTagIndex).map(a => a.trim());
+
+                // 分值在 __SCORE__ 标签之后
+                const score = parseInt(parts[scoreTagIndex + 1].trim(), 10);
+
+                if (isNaN(score)) {
+                    console.warn("跳过格式不正确的行 (分值不是有效数字):", line);
+                    continue;
+                }
+
+                questions.push({
+                    question: questionText,
+                    type: type,
+                    options: options,
+                    answer: answer,
+                    score: score
+                });
+            }
+            return { questionCounts, questions };
+        }
+
+        // 随机选择题目 (修改：根据inorder参数决定是否打乱)
+        function selectRandomQuestions(allQ, counts, inorder) {
+            let singleChoiceQuestions = allQ.filter(q => q.type === 'single_choice');
+            let multipleChoiceQuestions = allQ.filter(q => q.type === 'multiple_choice');
+            let trueFalseQuestions = allQ.filter(q => q.type === 'true_false');
+
+            // 如果 inorder 为 0 (随机排列)，则先打乱每个题型内部的题目
+            if (inorder === 0) {
+                singleChoiceQuestions = shuffleArray(singleChoiceQuestions);
+                multipleChoiceQuestions = shuffleArray(multipleChoiceQuestions);
+                trueFalseQuestions = shuffleArray(trueFalseQuestions);
+            }
+            // 如果 inorder 为 1 (按题库顺序)，则不打乱，保持原始顺序
+
+            const selected = [];
+            // 按照单选、多选、判断的顺序添加题目
+            selected.push(...singleChoiceQuestions.slice(0, counts.single_choice || 0));
+            selected.push(...multipleChoiceQuestions.slice(0, counts.multiple_choice || 0));
+            selected.push(...trueFalseQuestions.slice(0, counts.true_false || 0));
+
+            // 如果 inorder 为 0 (随机排列)，则对最终选择的题目进行整体打乱
+            if (inorder === 0) {
+                return shuffleArray(selected);
+            } else {
+                // 如果 inorder 为 1 (按题库顺序)，则保持当前顺序（按题型分组，题型内按原始CSV顺序）
+                return selected;
+            }
+        }
+
+        // 渲染考试题目
+        function renderExam(questions) {
+            examContainer.innerHTML = ''; // 清空现有内容
+            if (questions.length === 0) {
+                examContainer.innerHTML = '<p>没有可用的题目。</p>';
+                submitButton.style.display = 'none';
+                resetButton.style.display = 'none'; // 没有题目时也隐藏重考按钮
+                return;
+            }
+
+            // 预处理题目，按类型分组并计算统计信息
+            const groupedQuestions = {
+                single_choice: { name: '单选题', list: [], count: 0, totalScore: 0 },
+                multiple_choice: { name: '多选题', list: [], count: 0, totalScore: 0 },
+                true_false: { name: '判断题', list: [], count: 0, totalScore: 0 }
+            };
+
+            questions.forEach(q => {
+                if (groupedQuestions[q.type]) {
+                    groupedQuestions[q.type].list.push(q);
+                    groupedQuestions[q.type].count++;
+                    groupedQuestions[q.type].totalScore += q.score;
+                }
+            });
+
+            let overallQuestionIndex = 0; // 用于全局题目编号
+
+            // 按照指定顺序渲染题型
+            const orderedTypes = ['single_choice', 'multiple_choice', 'true_false'];
+
+            orderedTypes.forEach(typeKey => {
+                const typeData = groupedQuestions[typeKey];
+                if (typeData.count > 0) {
+                    // 添加题型标题
+                    const typeHeader = document.createElement('h2');
+                    typeHeader.classList.add('question-type-header');
+                    typeHeader.textContent = `${typeData.name} (${typeData.count}道, 共${typeData.totalScore}分)`;
+                    examContainer.appendChild(typeHeader);
+
+                    // 渲染该题型下的所有题目
+                    typeData.list.forEach(q => {
+                        const questionBlock = document.createElement('div');
+                        questionBlock.classList.add('question-block');
+                        questionBlock.dataset.questionIndex = overallQuestionIndex; // 用于后续查找
+
+                        const questionTitle = document.createElement('h3');
+                        // 题目文本直接设置textContent，KaTeX的renderMathInElement会处理其中的公式
+                        questionTitle.textContent = `${overallQuestionIndex + 1}. ${q.question} (${q.score}分)`;
+                        questionBlock.appendChild(questionTitle);
+
+                        const optionsDiv = document.createElement('div');
+                        optionsDiv.classList.add('options');
+
+                        // 创建一个可变的选项数组副本
+                        let currentOptions = [...q.options];
+
+                        // 根据 examSettings.choiceInOrder 和题目类型决定是否打乱选项
+                        // 判断题 (true_false) 始终不打乱选项
+                        if (examSettings.choiceInOrder === 0 && (q.type === 'single_choice' || q.type === 'multiple_choice')) {
+                            currentOptions = shuffleArray(currentOptions);
+                            console.log(`题目 ${overallQuestionIndex + 1} (${q.type}) 的选项已打乱。`);
+                        } else {
+                            console.log(`题目 ${overallQuestionIndex + 1} (${q.type}) 的选项未打乱。`);
+                        }
+
+
+                        currentOptions.forEach((option, optIndex) => {
+                            const label = document.createElement('label');
+                            const input = document.createElement('input');
+                            input.value = option;
+
+                            if (q.type === 'single_choice' || q.type === 'true_false') {
+                                input.type = 'radio';
+                                input.name = `question-${overallQuestionIndex}`; // 同一题目的单选按钮name相同
+                            } else if (q.type === 'multiple_choice') {
+                                input.type = 'checkbox';
+                                input.name = `question-${overallQuestionIndex}-option`; // 多选框name可以相同，但value不同
+                            }
+                            input.id = `q${overallQuestionIndex}-opt${optIndex}`; // 确保ID唯一
+
+                            label.appendChild(input);
+                            // 为了让KaTeX能够渲染选项中的公式，需要将选项文本放入一个元素中
+                            // 并使用textContent或innerHTML（如果选项中包含HTML标签）
+                            const optionTextSpan = document.createElement('span');
+                            optionTextSpan.textContent = option; // KaTeX的renderMathInElement会处理这个span的文本内容
+                            label.appendChild(optionTextSpan);
+
+                            optionsDiv.appendChild(label);
+                        });
+
+                        questionBlock.appendChild(optionsDiv);
+                        examContainer.appendChild(questionBlock);
+                        overallQuestionIndex++; // 递增全局题目编号
+                    });
+                }
+            });
+            submitButton.style.display = 'block'; // 显示提交按钮
+            resetButton.style.display = 'block'; // 显示重新考试按钮
+        }
+
+        // 提交考试并计算得分
+        function submitExam() {
+            let totalScore = 0;
+
+            selectedQuestions.forEach((q, index) => {
+                const questionBlock = examContainer.querySelector(`[data-question-index="${index}"]`);
+                const userAnswers = [];
+                let isCorrect = false;
+
+                // 禁用所有输入，防止重复提交或修改
+                const inputs = questionBlock.querySelectorAll('input');
+                inputs.forEach(input => {
+                    input.disabled = true;
+                    input.classList.add('disabled-input');
+                });
+
+                if (q.type === 'single_choice' || q.type === 'true_false') {
+                    const selectedInput = questionBlock.querySelector(`input[name="question-${index}"]:checked`);
+                    if (selectedInput) {
+                        userAnswers.push(selectedInput.value);
+                    }
+                    isCorrect = (userAnswers.length === 1 && userAnswers[0] === q.answer[0]);
+                } else if (q.type === 'multiple_choice') {
+                    const checkedInputs = questionBlock.querySelectorAll(`input[name="question-${index}-option"]:checked`);
+                    checkedInputs.forEach(input => userAnswers.push(input.value));
+
+                    // 比较多选题答案：用户选择的答案数量和内容必须与正确答案完全一致
+                    if (userAnswers.length === q.answer.length) {
+                        const sortedUserAnswers = userAnswers.sort();
+                        const sortedCorrectAnswers = q.answer.sort();
+                        isCorrect = sortedUserAnswers.every((val, i) => val === sortedCorrectAnswers[i]);
+                    } else {
+                        isCorrect = false;
+                    }
+                }
+
+                if (isCorrect) {
+                    totalScore += q.score;
+                }
+
+                // 显示答案反馈
+                let feedbackDiv = questionBlock.querySelector('.answer-feedback');
+                if (!feedbackDiv) {
+                    feedbackDiv = document.createElement('div');
+                    feedbackDiv.classList.add('answer-feedback');
+                    questionBlock.appendChild(feedbackDiv);
+                }
+
+                feedbackDiv.classList.remove('correct', 'incorrect');
+                feedbackDiv.classList.add(isCorrect ? 'correct' : 'incorrect');
+
+                const userAnswerText = userAnswers.length > 0 ? userAnswers.join(', ') : '未作答';
+                const correctAnswerText = q.answer.join(', ');
+
+                // 答案反馈也可能包含公式，所以也用innerHTML，并会在后续的renderMath中被处理
+                feedbackDiv.innerHTML = `
+                    <strong>您的答案：</strong> ${userAnswerText} <br>
+                    <strong>正确答案：</strong> ${correctAnswerText}
+                `;
+            });
+
+            finalScoreSpan.textContent = totalScore;
+            resultsContainer.style.display = 'block'; // 显示结果区域
+            submitButton.disabled = true; // 禁用提交按钮
+            submitButton.textContent = '考试已提交';
+
+            // 提交后，如果结果区域也可能包含公式，需要再次渲染
+            // 由于renderMathInElement会处理整个examContainer，所以这里不需要额外调用
+            // 但如果结果区域在examContainer之外，则需要单独调用
+            renderMath(); // 重新渲染，以确保答案反馈中的公式也被处理
+        }
+
+        // 重置考试状态并重新加载题目
+        async function resetExam() {
+            console.log('重置考试...');
+            examContainer.innerHTML = '<p>正在加载题目...</p>'; // 显示加载提示
+            resultsContainer.style.display = 'none'; // 隐藏结果区域
+            submitButton.disabled = false; // 启用提交按钮
+            submitButton.textContent = '提交考试'; // 恢复按钮文本
+            submitButton.style.display = 'none'; // 初始隐藏提交按钮，直到题目加载完成
+
+            // 清空已选择的题目，确保重新选择
+            selectedQuestions = [];
+
+            // 重新加载题目
+            await loadExam();
+            console.log('考试已重置并重新加载。');
+        }
+
+        // 加载CSV文件
+        async function loadExam() {
+            try {
+                // 先加载KaTeX，确保其在渲染题目之前可用
+                await loadKaTeX();
+
+                const response = await fetch(EXAM_CSV_FILE);
+                if (!response.ok) {
+                    throw new Error(`无法加载CSV文件: ${response.statusText}`);
+                }
+                const csvText = await response.text();
+                const { questionCounts, questions } = await parseCSVData(csvText);
+
+                allQuestions = questions;
+                examSettings = questionCounts; // 将解析出的设置存储到全局变量
+                // 传递 inorder 参数给 selectRandomQuestions
+                selectedQuestions = selectRandomQuestions(allQuestions, examSettings, examSettings.inorder);
+
+                console.log("已解析的题目数量配置:", examSettings); // 调试信息
+                console.log("本次考试选择的题目数量:", selectedQuestions.length); // 调试信息
+                console.log("题目排列顺序模式 (inorder):", examSettings.inorder === 1 ? "按题库顺序" : "随机"); // 调试信息
+                console.log("选项排列顺序模式 (choiceInOrder):", examSettings.choiceInOrder === 1 ? "按题库顺序" : "随机"); // 调试信息
+
+
+                renderExam(selectedQuestions);
+
+                // 在题目渲染到DOM后，渲染公式
+                renderMath();
+
+            } catch (error) {
+                console.error("加载考试失败:", error);
+                examContainer.innerHTML = `<p style="color: red;">加载题目失败：${error.message}。请检查 ${EXAM_CSV_FILE} 文件是否存在且格式正确。</p>`;
+                submitButton.style.display = 'none';
+                resetButton.style.display = 'none'; // 加载失败时也隐藏重考按钮
+            }
+        }
+
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', () => {
+            loadExam();
+            submitButton.addEventListener('click', submitExam);
+            resetButton.addEventListener('click', resetExam); // 绑定重新考试按钮事件
+        });
+    </script>
+</body>
+</html>
