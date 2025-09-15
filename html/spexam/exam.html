@@ -370,6 +370,7 @@
 
             // 第一行：题目数量配置 (使用标签)
             const countLine = lines.shift();
+            // 修正：这里移除了多余的箭头函数，确保part是字符串
             const countParts = countLine.split(',').map(part => part.trim());
             const questionCounts = {
                 single_choice: 0,
@@ -499,15 +500,19 @@
                 true_false: { name: '判断题', list: [], count: 0, totalScore: 0 }
             };
 
-            questions.forEach(q => {
+            // 这里不再直接使用 questions 数组的索引作为 data-question-index
+            // 而是使用 selectedQuestions 数组中的原始索引
+            questions.forEach((q, originalIndex) => { // 遍历 selectedQuestions 数组，获取原始索引
                 if (groupedQuestions[q.type]) {
-                    groupedQuestions[q.type].list.push(q);
+                    // 将原始索引存储在题目对象中，以便后续查找
+                    const questionWithOriginalIndex = { ...q, originalIndexInSelected: originalIndex };
+                    groupedQuestions[q.type].list.push(questionWithOriginalIndex);
                     groupedQuestions[q.type].count++;
                     groupedQuestions[q.type].totalScore += q.score;
                 }
             });
 
-            let overallQuestionIndex = 0; // 用于全局题目编号
+            let displayQuestionIndex = 0; // 用于页面上显示的题目编号
 
             // 按照指定顺序渲染题型
             const orderedTypes = ['single_choice', 'multiple_choice', 'true_false'];
@@ -522,14 +527,15 @@
                     examContainer.appendChild(typeHeader);
 
                     // 渲染该题型下的所有题目
-                    typeData.list.forEach(q => {
+                    typeData.list.forEach(q => { // q 现在包含了 originalIndexInSelected
                         const questionBlock = document.createElement('div');
                         questionBlock.classList.add('question-block');
-                        questionBlock.dataset.questionIndex = overallQuestionIndex; // 用于后续查找
+                        // 将 selectedQuestions 数组中的原始索引存储到 data-question-index
+                        questionBlock.dataset.questionIndex = q.originalIndexInSelected;
 
                         const questionTitle = document.createElement('h3');
                         // 题目文本直接设置textContent，KaTeX的renderMathInElement会处理其中的公式
-                        questionTitle.textContent = `${overallQuestionIndex + 1}. ${q.question} (${q.score}分)`;
+                        questionTitle.textContent = `${displayQuestionIndex + 1}. ${q.question} (${q.score}分)`;
                         questionBlock.appendChild(questionTitle);
 
                         const optionsDiv = document.createElement('div');
@@ -542,9 +548,9 @@
                         // 判断题 (true_false) 始终不打乱选项
                         if (examSettings.choiceInOrder === 0 && (q.type === 'single_choice' || q.type === 'multiple_choice')) {
                             currentOptions = shuffleArray(currentOptions);
-                            console.log(`题目 ${overallQuestionIndex + 1} (${q.type}) 的选项已打乱。`);
+                            console.log(`题目 ${displayQuestionIndex + 1} (${q.type}) 的选项已打乱。`);
                         } else {
-                            console.log(`题目 ${overallQuestionIndex + 1} (${q.type}) 的选项未打乱。`);
+                            console.log(`题目 ${displayQuestionIndex + 1} (${q.type}) 的选项未打乱。`);
                         }
 
 
@@ -553,14 +559,15 @@
                             const input = document.createElement('input');
                             input.value = option;
 
+                            // 使用 originalIndexInSelected 来作为 name 的一部分，确保唯一性
                             if (q.type === 'single_choice' || q.type === 'true_false') {
                                 input.type = 'radio';
-                                input.name = `question-${overallQuestionIndex}`; // 同一题目的单选按钮name相同
+                                input.name = `question-${q.originalIndexInSelected}`; // 同一题目的单选按钮name相同
                             } else if (q.type === 'multiple_choice') {
                                 input.type = 'checkbox';
-                                input.name = `question-${overallQuestionIndex}-option`; // 多选框name可以相同，但value不同
+                                input.name = `question-${q.originalIndexInSelected}-option`; // 多选框name可以相同，但value不同
                             }
-                            input.id = `q${overallQuestionIndex}-opt${optIndex}`; // 确保ID唯一
+                            input.id = `q${q.originalIndexInSelected}-opt${optIndex}`; // 确保ID唯一
 
                             label.appendChild(input);
                             // 为了让KaTeX能够渲染选项中的公式，需要将选项文本放入一个元素中
@@ -574,7 +581,7 @@
 
                         questionBlock.appendChild(optionsDiv);
                         examContainer.appendChild(questionBlock);
-                        overallQuestionIndex++; // 递增全局题目编号
+                        displayQuestionIndex++; // 递增页面显示题目编号
                     });
                 }
             });
@@ -585,9 +592,16 @@
         // 提交考试并计算得分
         function submitExam() {
             let totalScore = 0;
+            // 获取所有渲染在页面上的题目块
+            const questionBlocks = examContainer.querySelectorAll('.question-block');
 
-            selectedQuestions.forEach((q, index) => {
-                const questionBlock = examContainer.querySelector(`[data-question-index="${index}"]`);
+            // 遍历页面上实际渲染的每个题目块
+            questionBlocks.forEach(questionBlock => {
+                // 从题目块的data-question-index属性中获取其在selectedQuestions数组中的原始索引
+                const questionOriginalIndex = parseInt(questionBlock.dataset.questionIndex, 10);
+                // 根据原始索引从selectedQuestions数组中获取对应的题目对象
+                const q = selectedQuestions[questionOriginalIndex];
+
                 const userAnswers = [];
                 let isCorrect = false;
 
@@ -598,14 +612,15 @@
                     input.classList.add('disabled-input');
                 });
 
+                // 注意：这里的name属性也需要使用questionOriginalIndex来匹配
                 if (q.type === 'single_choice' || q.type === 'true_false') {
-                    const selectedInput = questionBlock.querySelector(`input[name="question-${index}"]:checked`);
+                    const selectedInput = questionBlock.querySelector(`input[name="question-${questionOriginalIndex}"]:checked`);
                     if (selectedInput) {
                         userAnswers.push(selectedInput.value);
                     }
                     isCorrect = (userAnswers.length === 1 && userAnswers[0] === q.answer[0]);
                 } else if (q.type === 'multiple_choice') {
-                    const checkedInputs = questionBlock.querySelectorAll(`input[name="question-${index}-option"]:checked`);
+                    const checkedInputs = questionBlock.querySelectorAll(`input[name="question-${questionOriginalIndex}-option"]:checked`);
                     checkedInputs.forEach(input => userAnswers.push(input.value));
 
                     // 比较多选题答案：用户选择的答案数量和内容必须与正确答案完全一致
@@ -649,8 +664,6 @@
             submitButton.textContent = '考试已提交';
 
             // 提交后，如果结果区域也可能包含公式，需要再次渲染
-            // 由于renderMathInElement会处理整个examContainer，所以这里不需要额外调用
-            // 但如果结果区域在examContainer之外，则需要单独调用
             renderMath(); // 重新渲染，以确保答案反馈中的公式也被处理
         }
 
