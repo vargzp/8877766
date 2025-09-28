@@ -1,34 +1,26 @@
 <!DOCTYPE html>
 <html lang="en-US" dir="ltr">
 <head>
-  <meta charset="UTF-8">
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="
-  Buttons
-  
-  #
-  
-
+<meta name="description" content="Buttons#
 Buttons are styled links that can lead to local page or external link.
-
-  Example
-  
-  #
-  
-
+Example#
 {{&lt; button relref=&#34;/&#34; [class=&#34;...&#34;] &gt;}}Get Home{{&lt; /button &gt;}}
-{{&lt; button href=&#34;https://github.com/alex-shpak/hugo-book&#34; &gt;}}Contribute{{&lt; /button &gt;}}
-Get Home
-
-Contribute
-">
+{{&lt; button href=&#34;https://github.com/alex-shpak/hugo-book&#34; &gt;}}Contribute{{&lt; /button &gt;}}Get Home
+Contribute">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
 <meta name="color-scheme" content="light dark"><meta property="og:url" content="https://8877766.xyz/en/docs/shortcodes/buttons/">
   <meta property="og:site_name" content="Tutorials that fit your way">
   <meta property="og:title" content="Tutorials that fit your way">
-  <meta property="og:description" content="Buttons#Buttons are styled links that can lead to local page or external link.
-Example#{{&lt; button relref=&#34;/&#34; [class=&#34;...&#34;] &gt;}}Get Home{{&lt; /button &gt;}} {{&lt; button href=&#34;https://github.com/alex-shpak/hugo-book&#34; &gt;}}Contribute{{&lt; /button &gt;}} Get HomeContribute">
+  <meta property="og:description" content="Buttons# Buttons are styled links that can lead to local page or external link.
+Example# {{&lt; button relref=&#34;/&#34; [class=&#34;...&#34;] &gt;}}Get Home{{&lt; /button &gt;}} {{&lt; button href=&#34;https://github.com/alex-shpak/hugo-book&#34; &gt;}}Contribute{{&lt; /button &gt;}}Get Home Contribute">
   <meta property="og:locale" content="en_US">
   <meta property="og:type" content="article">
     <meta property="article:section" content="docs">
@@ -36,18 +28,17 @@ Example#{{&lt; button relref=&#34;/&#34; [class=&#34;...&#34;] &gt;}}Get Home{
 <link rel="icon" href="/8877766.avif" >
 <link rel="manifest" href="/manifest.json">
 <link rel="canonical" href="https://8877766.xyz/en/docs/shortcodes/buttons/">
-<link rel="stylesheet" href="/book.min.74d2c93e2ac1cc7d080eb3d41b950d85b98c9cf718733767337b273712ecdf18.css" integrity="sha256-dNLJPirBzH0IDrPUG5UNhbmMnPcYczdnM3snNxLs3xg=" crossorigin="anonymous">
+<link rel="stylesheet" href="/book.min.7359c6442699afbd24901490632322c6aef22b76d9e512e7a3859a5870177e56.css" integrity="sha256-c1nGRCaZr70kkBSQYyMixq7yK3bZ5RLno4WaWHAXflY=" crossorigin="anonymous">
+
+
   <script defer src="/fuse.min.js"></script>
-  <script defer src="/en.search.min.2c41a13028189a1e985adc6908b35fd1c7b067c0fbb74e30dad962a1bfa83fe2.js" integrity="sha256-LEGhMCgYmh6YWtxpCLNf0cewZ8D7t04w2tliob&#43;oP&#43;I=" crossorigin="anonymous"></script>
+  <script defer src="/en.search.min.26e3c5a00c2ae4aaf94ca4d41e25d2b677f2ba5f996ceb7141370c308b81f11c.js" integrity="sha256-JuPFoAwq5Kr5TKTUHiXStnfyul&#43;ZbOtxQTcMMIuB8Rw=" crossorigin="anonymous"></script>
 
   <script defer src="/sw.min.6f6f90fcb8eb1c49ec389838e6b801d0de19430b8e516902f8d75c3c8bd98739.js" integrity="sha256-b2&#43;Q/LjrHEnsOJg45rgB0N4ZQwuOUWkC&#43;NdcPIvZhzk=" crossorigin="anonymous"></script>
-<!--
-Made with Book Theme
-https://github.com/alex-shpak/hugo-book
--->
+
   
 </head>
-<body dir="ltr" class="book-kind-page book-type-docs book-layout-">
+<body dir="ltr" class="book-kind-page book-type-docs">
   <input type="checkbox" class="hidden toggle" id="menu-control" />
   <input type="checkbox" class="hidden toggle" id="toc-control" />
   <main class="container flex">
@@ -74,7 +65,6 @@ https://github.com/alex-shpak/hugo-book
   
 
 
-
   
     
   
@@ -85,25 +75,24 @@ https://github.com/alex-shpak/hugo-book
   <li>
     <input type="checkbox" id="languages" class="toggle" />
     <label for="languages" class="flex">
-      <a role="button" class="flex flex-auto">
-        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
-        <span>English</span>
+      <a role="button">
+        <img src="/icons/translate.svg" class="book-icon" alt="Languages" />
+        English
       </a>
+      <img src="/icons/chevron-right.svg" class="book-icon" />
     </label>
 
     <ul>
       
       <li>
-        <a href="/">
-          <span>简体中文</span>
+        <a href="/" class="flex flex-auto">
+          简体中文
         </a>
       </li>
       
     </ul>
   </li>
 </ul>
-
-
 
 
 
@@ -126,7 +115,8 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/en/docs/example/" class="">Example Site</a>
+    <a href="/en/docs/example/" class="">
+      Example Site</a>
   
 
           
@@ -139,7 +129,8 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/en/docs/example/table-of-contents/" class="">Table of Contents</a>
+    <a href="/en/docs/example/table-of-contents/" class="">
+      Table of Contents</a>
   
 
           
@@ -152,7 +143,8 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/en/docs/example/table-of-contents/with-toc/" class="">With ToC</a>
+    <a href="/en/docs/example/table-of-contents/with-toc/" class="">
+      With ToC</a>
   
 
         </li>
@@ -165,7 +157,8 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/en/docs/example/table-of-contents/without-toc/" class="">Without ToC</a>
+    <a href="/en/docs/example/table-of-contents/without-toc/" class="">
+      Without ToC</a>
   
 
         </li>
@@ -185,7 +178,9 @@ https://github.com/alex-shpak/hugo-book
   
     <input type="checkbox" id="section-f3b7d1ed11794e9b0e2c404b9a95fec6" class="toggle"  />
     <label for="section-f3b7d1ed11794e9b0e2c404b9a95fec6" class="flex">
-      <a role="button" class="flex-auto ">Collapsed</a>
+      <a role="button" class="">
+        Collapsed</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" />
     </label>
   
 
@@ -199,7 +194,8 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/en/docs/example/collapsed/3rd-level/" class="">3rd Level</a>
+    <a href="/en/docs/example/collapsed/3rd-level/" class="">
+      3rd Level</a>
   
 
           
@@ -212,7 +208,8 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/en/docs/example/collapsed/3rd-level/4th-level/" class="">4th Level</a>
+    <a href="/en/docs/example/collapsed/3rd-level/4th-level/" class="">
+      4th Level</a>
   
 
         </li>
@@ -240,7 +237,8 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <span>Shortcodes</span>
+    <a>
+      Shortcodes</a>
   
 
           
@@ -253,7 +251,8 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/en/docs/shortcodes/badges/" class="">Badges</a>
+    <a href="/en/docs/shortcodes/badges/" class="">
+      Badges</a>
   
 
         </li>
@@ -266,7 +265,8 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/en/docs/shortcodes/buttons/" class="active">Buttons</a>
+    <a href="/en/docs/shortcodes/buttons/" class="active">
+      Buttons</a>
   
 
         </li>
@@ -279,7 +279,8 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/en/docs/shortcodes/cards/" class="">Cards</a>
+    <a href="/en/docs/shortcodes/cards/" class="">
+      Cards</a>
   
 
         </li>
@@ -292,7 +293,8 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/en/docs/shortcodes/columns/" class="">Columns</a>
+    <a href="/en/docs/shortcodes/columns/" class="">
+      Columns</a>
   
 
         </li>
@@ -305,7 +307,8 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/en/docs/shortcodes/details/" class="">Details</a>
+    <a href="/en/docs/shortcodes/details/" class="">
+      Details</a>
   
 
         </li>
@@ -318,7 +321,8 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/en/docs/shortcodes/hints/" class="">Hints</a>
+    <a href="/en/docs/shortcodes/hints/" class="">
+      Hints</a>
   
 
         </li>
@@ -331,7 +335,8 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/en/docs/shortcodes/mermaid/" class="">Mermaid</a>
+    <a href="/en/docs/shortcodes/mermaid/" class="">
+      Mermaid</a>
   
 
         </li>
@@ -344,7 +349,8 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/en/docs/shortcodes/steps/" class="">Steps</a>
+    <a href="/en/docs/shortcodes/steps/" class="">
+      Steps</a>
   
 
         </li>
@@ -357,7 +363,8 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/en/docs/shortcodes/tabs/" class="">Tabs</a>
+    <a href="/en/docs/shortcodes/tabs/" class="">
+      Tabs</a>
   
 
         </li>
@@ -370,7 +377,8 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/en/docs/shortcodes/katex/" class="">KaTeX</a>
+    <a href="/en/docs/shortcodes/katex/" class="">
+      KaTeX</a>
   
 
         </li>
@@ -392,19 +400,7 @@ https://github.com/alex-shpak/hugo-book
 
 
 
-  
-<ul>
-  
-  <li>
-    
-    <a href="/en/posts/"  >
-        Blog
-      </a>
-  </li>
-  
-</ul>
-
-
+<ul><li><a href="/en/posts/" title="Blog">blog</a></li></ul>
 
 
 
@@ -427,7 +423,7 @@ https://github.com/alex-shpak/hugo-book
         
   <div class="flex align-center justify-between">
   <label for="menu-control">
-    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
   </label>
 
   <h3>Buttons</h3>
@@ -444,25 +440,12 @@ https://github.com/alex-shpak/hugo-book
 
       
       
-  <article class="markdown book-article"><h1 id="buttons">
-  Buttons
-  
-  <a class="anchor" href="#buttons">#</a>
-  
-</h1>
+  <article class="markdown book-article"><h1 id="buttons">Buttons<a class="anchor" href="#buttons">#</a></h1>
 <p>Buttons are styled links that can lead to local page or external link.</p>
-<h2 id="example">
-  Example
-  
-  <a class="anchor" href="#example">#</a>
-  
-</h2>
+<h2 id="example">Example<a class="anchor" href="#example">#</a></h2>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-tpl" data-lang="tpl"><span style="display:flex;"><span><span style="color:#75715e">{{</span><span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">button</span> <span style="color:#a6e22e">relref</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/&#34;</span> <span style="color:#f92672">[</span><span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;...&#34;</span><span style="color:#f92672">]</span> <span style="color:#f92672">&gt;</span><span style="color:#75715e">}}</span>Get Home<span style="color:#75715e">{{</span><span style="color:#f92672">&lt;</span> <span style="color:#f92672">/</span><span style="color:#a6e22e">button</span> <span style="color:#f92672">&gt;</span><span style="color:#75715e">}}</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">{{</span><span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">button</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://github.com/alex-shpak/hugo-book&#34;</span> <span style="color:#f92672">&gt;</span><span style="color:#75715e">}}</span>Contribute<span style="color:#75715e">{{</span><span style="color:#f92672">&lt;</span> <span style="color:#f92672">/</span><span style="color:#a6e22e">button</span> <span style="color:#f92672">&gt;</span><span style="color:#75715e">}}</span>
-</span></span></code></pre></div><p><a  href="/en/"   class="book-btn">Get Home</a>
-
-<a  href="https://github.com/alex-shpak/hugo-book"   target="_blank" rel="noopener"  class="book-btn">Contribute</a>
-</p>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">{{</span><span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">button</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://github.com/alex-shpak/hugo-book&#34;</span> <span style="color:#f92672">&gt;</span><span style="color:#75715e">}}</span>Contribute<span style="color:#75715e">{{</span><span style="color:#f92672">&lt;</span> <span style="color:#f92672">/</span><span style="color:#a6e22e">button</span> <span style="color:#f92672">&gt;</span><span style="color:#75715e">}}</span></span></span></code></pre></div><p><a href="/en/"  class="book-btn">Get Home</a>
+<a href="https://github.com/alex-shpak/hugo-book" target="_blank" rel="noopener" class="book-btn">Contribute</a></p>
 </article>
  
       
@@ -471,9 +454,13 @@ https://github.com/alex-shpak/hugo-book
         
   <div class="flex flex-wrap justify-between">
 
+<div>
 
+</div>
 
+<div>
 
+</div>
 
 </div>
 
@@ -487,17 +474,17 @@ https://github.com/alex-shpak/hugo-book
   <div class="flex flex-wrap justify-between">
     <span>
     
-      <a href="/en/docs/shortcodes/badges/" class="flex align-center book-icon">
-        <img src="/svg/backward.svg" class="book-icon" alt="Previous" title="Badges" />
+      <a href="/en/docs/shortcodes/badges/" class="flex align-center">
+        <img src="/icons/backward.svg" class="book-icon" alt="Previous" title="Badges" />
         <span>Badges</span>
       </a>
     
     </span>
     <span>
     
-      <a href="/en/docs/shortcodes/cards/" class="flex align-center book-icon">
+      <a href="/en/docs/shortcodes/cards/" class="flex align-center">
         <span>Cards</span>
-        <img src="/svg/forward.svg" class="book-icon" alt="Next" title="Cards" />
+        <img src="/icons/forward.svg" class="book-icon" alt="Next" title="Cards" />
       </a>
     
     </span>
@@ -512,11 +499,14 @@ https://github.com/alex-shpak/hugo-book
 
  
         
-      </footer>
-
-      
   
  
+        
+        
+
+ 
+      </footer>
+
       <label for="menu-control" class="hidden book-menu-overlay"></label>
     </div>
 
@@ -528,6 +518,8 @@ https://github.com/alex-shpak/hugo-book
   
 </body>
 </html>
+
+
 
 
 
