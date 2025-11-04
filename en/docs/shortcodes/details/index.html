@@ -8,18 +8,8 @@ https://github.com/alex-shpak/hugo-book
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Details#
-Details shortcode is a helper for details html5 element. It is going to replace expand shortcode.
-Example#
-{{% details &#34;Title&#34; [open] %}}
-## Markdown content
-Lorem markdownum insigne...
-{{% /details %}}{{% details title=&#34;Title&#34; open=true %}}
-## Markdown content
-Lorem markdownum insigne...
-{{% /details %}}Title
-Markdown content#
-Lorem markdownum insigne&hellip;
+<meta name="description" content="Details# Details shortcode is a helper for details html5 element. It is going to replace expand shortcode.
+Example# {{% details &#34;Title&#34; [open] %}} ## Markdown content Lorem markdownum insigne... {{% /details %}}{{% details title=&#34;Title&#34; open=true %}} ## Markdown content Lorem markdownum insigne... {{% /details %}}Title Markdown content# Lorem markdownum insigne…
 ">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
@@ -31,17 +21,26 @@ Example# {{% details &#34;Title&#34; [open] %}} ## Markdown content Lorem markdo
   <meta property="og:locale" content="en_US">
   <meta property="og:type" content="article">
     <meta property="article:section" content="docs">
+
+
+  <meta itemprop="name" content="Tutorials that fit your way">
+  <meta itemprop="description" content="Details# Details shortcode is a helper for details html5 element. It is going to replace expand shortcode.
+Example# {{% details &#34;Title&#34; [open] %}} ## Markdown content Lorem markdownum insigne... {{% /details %}}{{% details title=&#34;Title&#34; open=true %}} ## Markdown content Lorem markdownum insigne... {{% /details %}}Title Markdown content# Lorem markdownum insigne…">
+  <meta itemprop="wordCount" content="50">
+
 <title>Details | Tutorials that fit your way</title>
 <link rel="icon" href="/8877766.avif" >
 <link rel="manifest" href="/manifest.json">
 <link rel="canonical" href="https://8877766.xyz/en/docs/shortcodes/details/">
-<link rel="stylesheet" href="/book.min.7359c6442699afbd24901490632322c6aef22b76d9e512e7a3859a5870177e56.css" integrity="sha256-c1nGRCaZr70kkBSQYyMixq7yK3bZ5RLno4WaWHAXflY=" crossorigin="anonymous">
+<link rel="stylesheet" href="/book.min.c20f4217507beff9cd9f2f007b24571ccfb67f08103aeae6ab808fa7125aec7f.css" integrity="sha256-wg9CF1B77/nNny8AeyRXHM&#43;2fwgQOurmq4CPpxJa7H8=" crossorigin="anonymous">
 
 
   <script defer src="/fuse.min.js"></script>
-  <script defer src="/en.search.min.26e3c5a00c2ae4aaf94ca4d41e25d2b677f2ba5f996ceb7141370c308b81f11c.js" integrity="sha256-JuPFoAwq5Kr5TKTUHiXStnfyul&#43;ZbOtxQTcMMIuB8Rw=" crossorigin="anonymous"></script>
+  <script defer src="/en.search.min.5eea8a0b68040cce5c98e2e057b109f208412a883ebe9d6adb0fc163453d28bc.js" integrity="sha256-XuqKC2gEDM5cmOLgV7EJ8ghBKog&#43;vp1q2w/BY0U9KLw=" crossorigin="anonymous"></script>
 
   <script defer src="/sw.min.6f6f90fcb8eb1c49ec389838e6b801d0de19430b8e516902f8d75c3c8bd98739.js" integrity="sha256-b2&#43;Q/LjrHEnsOJg45rgB0N4ZQwuOUWkC&#43;NdcPIvZhzk=" crossorigin="anonymous"></script>
+
+
 
   
 </head>
@@ -61,7 +60,10 @@ Example# {{% details &#34;Title&#34; [open] %}} ## Markdown content Lorem markdo
 
 
 <div class="book-search hidden">
-  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" data-hotkeys="s/" />
   <div class="book-search-spinner hidden"></div>
   <ul id="book-search-results"></ul>
 </div>
@@ -86,7 +88,7 @@ Example# {{% details &#34;Title&#34; [open] %}} ## Markdown content Lorem markdo
         <img src="/icons/translate.svg" class="book-icon" alt="Languages" />
         English
       </a>
-      <img src="/icons/chevron-right.svg" class="book-icon" />
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
     </label>
 
     <ul>
@@ -187,7 +189,7 @@ Example# {{% details &#34;Title&#34; [open] %}} ## Markdown content Lorem markdo
     <label for="section-f3b7d1ed11794e9b0e2c404b9a95fec6" class="flex">
       <a role="button" class="">
         Collapsed</a>
-      <img src="/icons/chevron-right.svg" class="book-icon" />
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
     </label>
   
 
@@ -426,7 +428,7 @@ Example# {{% details &#34;Title&#34; [open] %}} ## Markdown content Lorem markdo
  
 
     <div class="book-page">
-      <header class="book-header">
+      <header class="book-header hidden">
         
   <div class="flex align-center justify-between">
   <label for="menu-control">
@@ -450,13 +452,13 @@ Example# {{% details &#34;Title&#34; [open] %}} ## Markdown content Lorem markdo
   <article class="markdown book-article"><h1 id="details">Details<a class="anchor" href="#details">#</a></h1>
 <p>Details shortcode is a helper for <code>details</code> html5 element. It is going to replace <code>expand</code> shortcode.</p>
 <h2 id="example">Example<a class="anchor" href="#example">#</a></h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-tpl" data-lang="tpl"><span style="display:flex;"><span><span style="color:#75715e">{{</span><span style="color:#f92672">%</span> <span style="color:#a6e22e">details</span> <span style="color:#e6db74">&#34;Title&#34;</span> <span style="color:#f92672">[</span><span style="color:#a6e22e">open</span><span style="color:#f92672">]</span> <span style="color:#f92672">%</span><span style="color:#75715e">}}</span>
+<div class="highlight"><pre tabindex="0" style="color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-tpl" data-lang="tpl"><span style="display:flex;"><span><span style="color:#78787e">{{</span><span style="color:#ff6ac1">%</span> <span style="color:#57c7ff">details</span> <span style="color:#5af78e">&#34;Title&#34;</span> <span style="color:#ff6ac1">[</span><span style="color:#57c7ff">open</span><span style="color:#ff6ac1">]</span> <span style="color:#ff6ac1">%</span><span style="color:#78787e">}}</span>
 </span></span><span style="display:flex;"><span>## Markdown content
 </span></span><span style="display:flex;"><span>Lorem markdownum insigne...
-</span></span><span style="display:flex;"><span><span style="color:#75715e">{{</span><span style="color:#f92672">%</span> <span style="color:#f92672">/</span><span style="color:#a6e22e">details</span> <span style="color:#f92672">%</span><span style="color:#75715e">}}</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-tpl" data-lang="tpl"><span style="display:flex;"><span><span style="color:#75715e">{{</span><span style="color:#f92672">%</span> <span style="color:#a6e22e">details</span> <span style="color:#a6e22e">title</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Title&#34;</span> <span style="color:#a6e22e">open</span><span style="color:#f92672">=</span><span style="color:#66d9ef">true</span> <span style="color:#f92672">%</span><span style="color:#75715e">}}</span>
+</span></span><span style="display:flex;"><span><span style="color:#78787e">{{</span><span style="color:#ff6ac1">%</span> <span style="color:#ff6ac1">/</span><span style="color:#57c7ff">details</span> <span style="color:#ff6ac1">%</span><span style="color:#78787e">}}</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-tpl" data-lang="tpl"><span style="display:flex;"><span><span style="color:#78787e">{{</span><span style="color:#ff6ac1">%</span> <span style="color:#57c7ff">details</span> <span style="color:#57c7ff">title</span><span style="color:#ff6ac1">=</span><span style="color:#5af78e">&#34;Title&#34;</span> <span style="color:#57c7ff">open</span><span style="color:#ff6ac1">=</span><span style="color:#ff6ac1">true</span> <span style="color:#ff6ac1">%</span><span style="color:#78787e">}}</span>
 </span></span><span style="display:flex;"><span>## Markdown content
 </span></span><span style="display:flex;"><span>Lorem markdownum insigne...
-</span></span><span style="display:flex;"><span><span style="color:#75715e">{{</span><span style="color:#f92672">%</span> <span style="color:#f92672">/</span><span style="color:#a6e22e">details</span> <span style="color:#f92672">%</span><span style="color:#75715e">}}</span></span></span></code></pre></div><details open><summary>Title</summary><div class="markdown-inner">
+</span></span><span style="display:flex;"><span><span style="color:#78787e">{{</span><span style="color:#ff6ac1">%</span> <span style="color:#ff6ac1">/</span><span style="color:#57c7ff">details</span> <span style="color:#ff6ac1">%</span><span style="color:#78787e">}}</span></span></span></code></pre></div><details open="true"><summary>Title</summary><div class="markdown-inner">
 <h2 id="markdown-content">Markdown content<a class="anchor" href="#markdown-content">#</a></h2>
 <p>Lorem markdownum insigne&hellip;</p>
 </div></details>
@@ -489,7 +491,7 @@ Example# {{% details &#34;Title&#34; [open] %}} ## Markdown content Lorem markdo
     <span>
     
       <a href="/en/docs/shortcodes/columns/" class="flex align-center">
-        <img src="/icons/backward.svg" class="book-icon" alt="Previous" title="Columns" />
+        <img src="/icons/backward.svg" class="book-icon" alt="Backward" />
         <span>Columns</span>
       </a>
     
@@ -498,7 +500,7 @@ Example# {{% details &#34;Title&#34; [open] %}} ## Markdown content Lorem markdo
     
       <a href="/en/docs/shortcodes/hints/" class="flex align-center">
         <span>Hints</span>
-        <img src="/icons/forward.svg" class="book-icon" alt="Next" title="Hints" />
+        <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
       </a>
     
     </span>
@@ -506,32 +508,35 @@ Example# {{% details &#34;Title&#34; [open] %}} ## Markdown content Lorem markdo
   
 
 
-
-
-  <script>(function(){function select(element){const selection=window.getSelection(),range=document.createRange();range.selectNodeContents(element),selection.removeAllRanges(),selection.addRange(range)}document.querySelectorAll("pre code").forEach(code=>{code.addEventListener("click",function(){if(window.getSelection().toString())return;select(code.parentElement),navigator.clipboard&&navigator.clipboard.writeText(code.parentElement.textContent)})})})()</script>
-
-
  
         
   
  
         
         
-
+  
  
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(code=>{code.addEventListener("click",code.focus),code.addEventListener("copy",function(event){if(event.preventDefault(),navigator.clipboard){const content=window.getSelection().toString()||code.textContent;navigator.clipboard.writeText(content)}})})})()</script>
+  
+
       </footer>
 
       <label for="menu-control" class="hidden book-menu-overlay"></label>
     </div>
 
     
-
+  
  
   </main>
 
   
 </body>
 </html>
+
+
 
 
 

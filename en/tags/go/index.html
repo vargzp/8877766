@@ -16,17 +16,25 @@ https://github.com/alex-shpak/hugo-book
   <meta property="og:title" content="Go">
   <meta property="og:locale" content="en_US">
   <meta property="og:type" content="website">
+
+
+  <meta itemprop="name" content="Go">
+  <meta itemprop="datePublished" content="2014-04-02T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2014-04-02T00:00:00+00:00">
+
 <title>Go | Tutorials that fit your way</title>
 <link rel="icon" href="/8877766.avif" >
 <link rel="manifest" href="/manifest.json">
 <link rel="canonical" href="https://8877766.xyz/en/tags/go/">
-<link rel="stylesheet" href="/book.min.7359c6442699afbd24901490632322c6aef22b76d9e512e7a3859a5870177e56.css" integrity="sha256-c1nGRCaZr70kkBSQYyMixq7yK3bZ5RLno4WaWHAXflY=" crossorigin="anonymous">
+<link rel="stylesheet" href="/book.min.c20f4217507beff9cd9f2f007b24571ccfb67f08103aeae6ab808fa7125aec7f.css" integrity="sha256-wg9CF1B77/nNny8AeyRXHM&#43;2fwgQOurmq4CPpxJa7H8=" crossorigin="anonymous">
 
 
   <script defer src="/fuse.min.js"></script>
-  <script defer src="/en.search.min.26e3c5a00c2ae4aaf94ca4d41e25d2b677f2ba5f996ceb7141370c308b81f11c.js" integrity="sha256-JuPFoAwq5Kr5TKTUHiXStnfyul&#43;ZbOtxQTcMMIuB8Rw=" crossorigin="anonymous"></script>
+  <script defer src="/en.search.min.5eea8a0b68040cce5c98e2e057b109f208412a883ebe9d6adb0fc163453d28bc.js" integrity="sha256-XuqKC2gEDM5cmOLgV7EJ8ghBKog&#43;vp1q2w/BY0U9KLw=" crossorigin="anonymous"></script>
 
   <script defer src="/sw.min.6f6f90fcb8eb1c49ec389838e6b801d0de19430b8e516902f8d75c3c8bd98739.js" integrity="sha256-b2&#43;Q/LjrHEnsOJg45rgB0N4ZQwuOUWkC&#43;NdcPIvZhzk=" crossorigin="anonymous"></script>
+
+
 <link rel="alternate" type="application/rss+xml" href="https://8877766.xyz/en/tags/go/index.xml" title="Tutorials that fit your way" />
 
   
@@ -47,7 +55,10 @@ https://github.com/alex-shpak/hugo-book
 
 
 <div class="book-search hidden">
-  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" data-hotkeys="s/" />
   <div class="book-search-spinner hidden"></div>
   <ul id="book-search-results"></ul>
 </div>
@@ -72,7 +83,7 @@ https://github.com/alex-shpak/hugo-book
         <img src="/icons/translate.svg" class="book-icon" alt="Languages" />
         English
       </a>
-      <img src="/icons/chevron-right.svg" class="book-icon" />
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
     </label>
 
     <ul>
@@ -173,7 +184,7 @@ https://github.com/alex-shpak/hugo-book
     <label for="section-f3b7d1ed11794e9b0e2c404b9a95fec6" class="flex">
       <a role="button" class="">
         Collapsed</a>
-      <img src="/icons/chevron-right.svg" class="book-icon" />
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
     </label>
   
 
@@ -412,7 +423,7 @@ https://github.com/alex-shpak/hugo-book
  
 
     <div class="book-page">
-      <header class="book-header">
+      <header class="book-header hidden">
         
   <div class="flex align-center justify-between">
   <label for="menu-control">
@@ -440,7 +451,7 @@ https://github.com/alex-shpak/hugo-book
     </h2>
     
   <div class="flex align-center text-small book-post-date">
-    <img src="/icons/calendar.svg" class="book-icon" alt="" />
+    <img src="/icons/calendar.svg" class="book-icon" alt="Calendar" />
     <span>2014-04-02</span>
   </div>
 
@@ -482,7 +493,7 @@ provide more details.</p></div>
     </h2>
     
   <div class="flex align-center text-small book-post-date">
-    <img src="/icons/calendar.svg" class="book-icon" alt="" />
+    <img src="/icons/calendar.svg" class="book-icon" alt="Calendar" />
     <span>2014-04-02</span>
   </div>
 
@@ -553,19 +564,20 @@ you are reading right now.</p>
   
 
 
-
-
-  <script>(function(){function select(element){const selection=window.getSelection(),range=document.createRange();range.selectNodeContents(element),selection.removeAllRanges(),selection.addRange(range)}document.querySelectorAll("pre code").forEach(code=>{code.addEventListener("click",function(){if(window.getSelection().toString())return;select(code.parentElement),navigator.clipboard&&navigator.clipboard.writeText(code.parentElement.textContent)})})})()</script>
-
-
  
         
   
  
         
         
-
+  
  
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(code=>{code.addEventListener("click",code.focus),code.addEventListener("copy",function(event){if(event.preventDefault(),navigator.clipboard){const content=window.getSelection().toString()||code.textContent;navigator.clipboard.writeText(content)}})})})()</script>
+  
+
       </footer>
 
       <label for="menu-control" class="hidden book-menu-overlay"></label>
@@ -580,15 +592,15 @@ you are reading right now.</p>
   
     
     <li class="book-section-flat">
-      <span>Categories</span>
+      <a>Categories</a>
       <ul>
       
-        <li class="flex justify-between">
+        <li class="flex align-center">
           <a href="/en/categories/development/">Development</a>
           <span>2</span>
         </li>
       
-        <li class="flex justify-between">
+        <li class="flex align-center">
           <a href="/en/categories/golang/">Golang</a>
           <span>2</span>
         </li>
@@ -599,35 +611,35 @@ you are reading right now.</p>
   
     
     <li class="book-section-flat">
-      <span>Tags</span>
+      <a>Tags</a>
       <ul>
       
-        <li class="flex justify-between">
+        <li class="flex align-center">
           <a href="/en/tags/development/">Development</a>
           <span>2</span>
         </li>
       
-        <li class="flex justify-between">
+        <li class="flex align-center">
           <a href="/en/tags/go/">Go</a>
           <span>2</span>
         </li>
       
-        <li class="flex justify-between">
+        <li class="flex align-center">
           <a href="/en/tags/golang/">Golang</a>
           <span>2</span>
         </li>
       
-        <li class="flex justify-between">
+        <li class="flex align-center">
           <a href="/en/tags/hugo/">Hugo</a>
           <span>1</span>
         </li>
       
-        <li class="flex justify-between">
+        <li class="flex align-center">
           <a href="/en/tags/templates/">Templates</a>
           <span>1</span>
         </li>
       
-        <li class="flex justify-between">
+        <li class="flex align-center">
           <a href="/en/tags/themes/">Themes</a>
           <span>1</span>
         </li>
@@ -648,6 +660,8 @@ you are reading right now.</p>
   
 </body>
 </html>
+
+
 
 
 
