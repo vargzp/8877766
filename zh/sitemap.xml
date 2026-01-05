@@ -13,14 +13,14 @@
     <loc>https://8877766.xyz/test/2/</loc>
     <lastmod>2025-05-23T03:04:06+00:00</lastmod>
   </url><url>
-    <loc>https://8877766.xyz/calendar/202511/</loc>
-    <lastmod>2025-11-04T00:00:00+00:00</lastmod>
+    <loc>https://8877766.xyz/calendar/202601/</loc>
+    <lastmod>2026-01-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://8877766.xyz/calendar/</loc>
-    <lastmod>2025-11-04T00:00:00+00:00</lastmod>
+    <lastmod>2026-01-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://8877766.xyz/</loc>
-    <lastmod>2025-11-04T00:00:00+00:00</lastmod>
+    <lastmod>2026-01-01T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en-US"
@@ -31,6 +31,9 @@
                 hreflang="zh-CN"
                 href="https://8877766.xyz/"
                 />
+  </url><url>
+    <loc>https://8877766.xyz/calendar/202511/</loc>
+    <lastmod>2025-11-04T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://8877766.xyz/calendar/202512/</loc>
     <lastmod>2025-11-01T00:00:00+00:00</lastmod>
